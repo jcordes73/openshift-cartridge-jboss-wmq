@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Embeds WebSphere MQ configuration into an JBoss EAP instance
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+env_dir="${OPENSHIFT_JBOSSWMQ_DIR}/env"
+
+wmq_host=${wmq.host}
+wmq_port=${wmq.port}
+
+set_env_var 'OPENSHIFT_JBOSSWMQ_HOST' $wmq_host $env_dir
+set_env_var 'OPENSHIFT_JBOSSWMQ_PORT' $wmq_port $env_dir
+
+cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq.jmsra.rar ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/tools/jboss-cli.sh -c --controller=${OPENSHIFT_JBOSSEAP_IP}:${OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT} --file=${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq.cli
+cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
+
+client_result "WebSphere MQ added."

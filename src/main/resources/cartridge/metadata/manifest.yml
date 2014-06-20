@@ -1,0 +1,39 @@
+Name: jbosswmq
+Cartridge-Short-Name: JBossWMQ
+Display-Name: WebSphereMQ ${wmq.version}
+Description: "This cartridge installs the WebSphere MQ RAR in JBoss EAP 6 configures it."
+Version: '${wmq.version}'
+License: ASL 2.0
+
+Vendor: Red Hat
+Cartridge-Version: ${project.version}
+Cartridge-Vendor: redhat
+
+Categories:
+  - service
+  - database
+  - embedded
+Website: https://www.redhat.com/products/cloud-computing/openshift-enterprise/
+Help-Topics:
+  "Cartridge Specification Guide": https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/2/html-single/Cartridge_Specification_Guide/
+  "User Guide": https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/2/html-single/User_Guide/
+  "Administration Guide": https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/2/html-single/Administration_Guide/
+Provides:
+  - "jbosswmq"
+Requires:
+  - "jbosseap"
+Conflicts:
+Native-Requires:
+Architecture: noarch
+Reservations:
+Components:
+  default:
+    Service-Dependencies:
+    Publishes:
+    Subscribes:
+Publishes:
+Subscribes:
+Scaling:
+  Min: 1
+  Max: -1
+  

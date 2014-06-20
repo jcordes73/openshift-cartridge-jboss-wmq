@@ -1,0 +1,7 @@
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar:add(archive=wmq.jmsra.rar,transaction-support=NoTransaction)
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool:add(class-name=com.ibm.mq.connector.outbound.ManagedConnectionFactoryImpl, jndi-name=java:/WMQConnectionFactory, enabled=true, use-java-context=true, use-ccm=true,min-pool-size=1, max-pool-size=10)
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=hostName:add(value=${wmq.host})
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=port:add(value=${wmq.port})
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=channel:add(value=${wmq.channel})
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=transportType:add(value=${wmq.transportType})
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=queueManager:add(value=${wmq.queueManager})
