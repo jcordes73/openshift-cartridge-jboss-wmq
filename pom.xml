@@ -63,13 +63,13 @@
 						<finalName>${project.artifactId}-${project.version}</finalName>
 						<appendAssemblyId>false</appendAssemblyId>
 						<versionProperty>${project.version}</versionProperty>
-						<summary>OpenShift cartridge which embeds WebSphere MQ configuration in EAP 6</summary>
+						<summary>OpenShift Enterprise 2.x cartridge which embeds WebSphere MQ configuration in EAP 6</summary>
 						<group>Applications/Systems</group>
 						<defaultFilemode>755</defaultFilemode>
 						<defaultGroupname>root</defaultGroupname>
 						<copyright>LGPL</copyright>
 						<needarch>noarch</needarch>
-						<description>OpenShift cartridge which embeds WebSphere MQ configuration in EAP 6</description>
+						<description>OpenShift Enterprise 2.x cartridge which embeds WebSphere MQ configuration in EAP 6</description>
 						<mappings>
 							<mapping>
 								<directory>/usr/libexec/openshift/cartridges/jboss-wmq</directory>

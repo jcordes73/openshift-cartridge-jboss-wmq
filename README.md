@@ -2,7 +2,7 @@
 
 ## Description
 
-An OpenShift cartridge for provisioning WebSphere MQ RAR on the JBoss EAP 6 cartridge.
+An OpenShift Enterprise 2.x cartridge for provisioning WebSphere MQ RAR on the JBoss EAP 6 cartridge.
 
 ## Adding WebSphere MQ RAR
 
