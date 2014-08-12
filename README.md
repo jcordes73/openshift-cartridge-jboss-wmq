@@ -27,14 +27,13 @@ mvn clean install
 
 Below you can find information on what properties are used and can be overriden by passing system properties (i.e. using -D{name})
 
-|Property|Default|
-|--------|-------|
-|wmq.version|7.0.1.7|
-|wmq.host|localhost|
-|wmq.port|14138|
-|wmq.channel|MYCHANNEL|
-|wmq.transportType|CLIENT|
-|wmq.queueManager|MYQUEUEMANAGER|
+|Property|Default|                    |
+|----------------|--------------------|
+|wmq.jndiName    |java:/jboss/eis/MQCF|
+|wmq.host        |MYHOST              |
+|wmq.port        |MYPORT              |
+|wmq.channel     |MYCHANNEL           |
+|wmq.queueManager|MYQUEUEMANAGER      |
 
 ## Install
 
@@ -81,3 +80,15 @@ Finally you delete the cartridge using this command
 ```bash
 oo-admin-cartridge -a erase --name jbosswmq --version ${wmq.version} --cartridge_version ${project.version}
 ```
+
+## Cartridge creation
+
+When creating the cartridge you can pass the following environment variables to override the defaults specified in the pom.xml earlier:
+
+|Name                            |Defaulti (pom.xml)|
+|--------------------------------|------------------|
+|OPENSHIFT_JBOSSWMQ_JNDI_NAME    |wmq.jndiName      |
+|OPENSHIFT_JBOSSWMQ_HOST         |wmq.host          |
+|OPENSHIFT_JBOSSWMQ_PORT         |wmq.port          |
+|OPENSHIFT_JBOSSWMQ_CHANNEL      |wmq.channel       |
+|OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER|wmq.queueManager  |
