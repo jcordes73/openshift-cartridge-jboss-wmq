@@ -47,7 +47,7 @@ scp target/rpm/openshift-cartridge-jboss-wmq/RPMS/noarch/openshift-cartridge-jbo
 then install it using
 
 ```bash
-rpm -ivh openshift-cartridge-jboss-wmq-${project.version}.rpm
+rpm -ivh openshift-cartridge-jboss-wmq-${project.version}-1.noarch.rpm
 ```
 
 After the RPM has been installed successfully you need to install the cartridge like this:
@@ -79,5 +79,5 @@ oo-admin-cartridge -l
 Finally you delete the cartridge using this command
 
 ```bash
-oo-admin-cartridge -a erase --name jboss-wmq --version ${wmq.version} --cartridge_version ${project.version}
+oo-admin-cartridge -a erase --name jbosswmq --version ${wmq.version} --cartridge_version ${project.version}
 ```

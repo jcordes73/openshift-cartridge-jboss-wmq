@@ -1,0 +1,12 @@
+#!/bin/bash
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+TO_VERSION=$3
+
+rm ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments/wmq.jmsra.rar
+cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/${TO_VERSION}/wmq.jmsra.rar ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
+
+client_result "WebSphere MQ upgraded to ${project.version}."

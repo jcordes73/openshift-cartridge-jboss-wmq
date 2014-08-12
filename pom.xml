@@ -4,7 +4,7 @@
 
 	<groupId>com.redhat.openshift</groupId>
 	<artifactId>openshift-cartridge-jboss-wmq</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.3</version>
 	<packaging>rpm</packaging>
 
 	<name>openshift-cartridge-jboss-wmq</name>
@@ -13,10 +13,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<wmq.version>7.0.1.7</wmq.version>
-		<wmq.host>localhost</wmq.host>
-		<wmq.port>14138</wmq.port>
+		<wmq.jndiName>java:jboss/eis/MQCF</wmq.jndiName>
+		<wmq.host>MYHOST</wmq.host>
+		<wmq.port>MYPORT</wmq.port>
 		<wmq.channel>MYCHANNEL</wmq.channel>
-		<wmq.transportType>CLIENT</wmq.transportType>
 		<wmq.queueManager>MYQUEUEMANAGER</wmq.queueManager>
 	</properties>
 
@@ -84,6 +84,12 @@
 								</sources>
 							</mapping>
 						</mappings>
+
+                        <keyname>D3AABAF5</keyname>
+                          <keyPassphrase>
+                            <passphrase>redhat</passphrase>
+                          </keyPassphrase>
+
 					</configuration>
 				</plugin>
 				<plugin>

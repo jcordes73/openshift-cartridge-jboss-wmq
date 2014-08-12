@@ -1,22 +1,42 @@
 #!/bin/bash
 
-# Embeds WebSphere MQ configuration into an JBoss EAP instance
+# Embeds WebSphere MQ configuration and JCA Adapter into an JBoss EAP instance
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 env_dir="${OPENSHIFT_JBOSSWMQ_DIR}/env"
 
-wmq_host=${wmq.host}
-wmq_port=${wmq.port}
+if [ "x$OPENSHIFT_JBOSSWMQ_JNDI_NAME" == "x" ]; then
+  set_env_var 'OPENSHIFT_JBOSSWMQ_JNDI_NAME' "${wmq.jndiName}" $env_dir
+fi
 
-set_env_var 'OPENSHIFT_JBOSSWMQ_HOST' $wmq_host $env_dir
-set_env_var 'OPENSHIFT_JBOSSWMQ_PORT' $wmq_port $env_dir
+if [ "x$OPENSHIFT_JBOSSWMQ_HOST" == "x" ]; then
+  set_env_var 'OPENSHIFT_JBOSSWMQ_HOST' "${wmq.host}" $env_dir
+fi
 
-cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq.jmsra.rar ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments
+if [ "x$OPENSHIFT_JBOSSWMQ_PORT" == "x" ]; then
+  set_env_var 'OPENSHIFT_JBOSSWMQ_PORT' "${wmq.port}" $env_dir
+fi
 
-${OPENSHIFT_JBOSSEAP_DIR}/bin/tools/jboss-cli.sh -c --controller=${OPENSHIFT_JBOSSEAP_IP}:${OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT} --file=${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq.cli
+if [ "x$OPENSHIFT_JBOSSWMQ_CHANNEL" == "x" ]; then
+  set_env_var 'OPENSHIFT_JBOSSWMQ_CHANNEL' "${wmq.channel}" $env_dir
+fi
+
+if [ "x$OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER" == "x" ]; then
+  set_env_var 'OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER' "${wmq.queueManager}" $env_dir
+fi
+
+cart_props "jndi_name=${OPENSHIFT_JBOSSWMQ_JNDI_NAME}"
+cart_props "host=${OPENSHIFT_JBOSSWMQ_HOST}"
+cart_props "port=${OPENSHIFT_JBOSSWMQ_PORT}"
+cart_props "channel=${OPENSHIFT_JBOSSWMQ_CHANNEL}"
+cart_props "queue_manager=${OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER}"
+
+cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/${wmq.version}/wmq.jmsra.rar ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/tools/jboss-cli.sh -c --controller=${OPENSHIFT_JBOSSEAP_IP}:${OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT} --file=${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq-install.cli
 cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
 
 ${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
 
-client_result "WebSphere MQ added."
+client_result "WebSphere MQ ${project.version} added."

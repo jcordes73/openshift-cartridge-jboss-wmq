@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Removes WebSphere MQ configuration and JCA Adapter from an JBoss EAP instance
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+rm ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments/wmq.jmsra.rar
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/tools/jboss-cli.sh -c --controller=${OPENSHIFT_JBOSSEAP_IP}:${OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT} --file=${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq-remove.cli
+cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
+
+client_result "WebSphere MQ ${project.version} removed."

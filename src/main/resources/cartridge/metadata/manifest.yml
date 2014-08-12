@@ -13,6 +13,22 @@ Categories:
   - service
   - database
   - embedded
+Cart-Data:
+- Key: jndi_name
+  Type: cart_data
+  Description: WebSphere MQ Connect-Factory JNDI-Name
+- Key: host
+  Type: cart_data
+  Description: WebSphere MQ Host
+- Key: port
+  Type: cart_data
+  Description: WebSphere MQ Port
+- Key: channel
+  Type: cart_data
+  Description: WebSphere MQ Channel
+- Key: queue_manager
+  Type: cart_data
+  Description: WebSphere MQ Queue-Manager
 Website: https://www.redhat.com/products/cloud-computing/openshift-enterprise/
 Help-Topics:
   "Cartridge Specification Guide": https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/2/html-single/Cartridge_Specification_Guide/
