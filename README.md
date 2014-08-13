@@ -85,7 +85,7 @@ oo-admin-cartridge -a erase --name jbosswmq --version ${wmq.version} --cartridge
 
 When creating the cartridge you can pass the following environment variables to override the defaults specified in the pom.xml earlier:
 
-|Name|Defaulti (pom.xml)|
+|Name|Default (pom.xml)|
 |----|------------------|
 |OPENSHIFT_JBOSSWMQ_JNDI_NAME|wmq.jndiName|
 |OPENSHIFT_JBOSSWMQ_HOST|wmq.host|

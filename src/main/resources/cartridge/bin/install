@@ -39,4 +39,4 @@ cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT
 
 ${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
 
-client_result "WebSphere MQ ${project.version} added."
+client_result "WebSphere MQ cartridge ${project.version} added (supports WebSphere MQ RAR ${wmq.version})."

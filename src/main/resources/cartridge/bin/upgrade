@@ -2,6 +2,8 @@
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
+CARTRIDGE_VERSION=$1
+FROM_VERSION=$2
 TO_VERSION=$3
 
 rm ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments/wmq.jmsra.rar
@@ -9,4 +11,4 @@ cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/${TO_VERSION}/wmq.jmsra.rar ${OPENSHI
 
 ${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
 
-client_result "WebSphere MQ upgraded to ${project.version}."
+client_result "WebSphere MQ cartridge upgraded to $CARTRIDGE_VERSION (WebSphere MQ RAR upgraded from $FROM_VERSION to $TO_VERSION)."
