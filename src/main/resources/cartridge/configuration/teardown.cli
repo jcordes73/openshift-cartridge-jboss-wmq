@@ -1,0 +1,1 @@
+/subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar:remove()

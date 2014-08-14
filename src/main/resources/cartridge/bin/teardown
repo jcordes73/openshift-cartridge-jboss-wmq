@@ -1,14 +1,26 @@
 #!/bin/bash
 
-# Removes WebSphere MQ configuration and JCA Adapter from an JBoss EAP instance
+# Removes WebSphere MQ RAR configuration and JCA Adapter from an JBoss EAP instance
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
+source ${OPENSHIFT_JBOSSWMQ_DIR}/bin/util
 
-${OPENSHIFT_JBOSSEAP_DIR}/bin/tools/jboss-cli.sh -c --controller=${OPENSHIFT_JBOSSEAP_IP}:${OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT} --file=${OPENSHIFT_JBOSSWMQ_DIR}/configuration/wmq-remove.cli
+if  ! isrunning; then
+  client_error "WebSphere MQ RAR  cartridge ${project.version} teardown failed because JBoss is not started."
+  exit 1
+fi
+
+if  ! ismgmtup; then
+  client_error "WebSphere MQ RAR cartridge ${project.version} teardown failed because JBoss management interface is not up."
+  exit 1
+fi
+
+execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/teardown.cli
+
 cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
 
 rm ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments/wmq.jmsra.rar
 
 ${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
 
-client_result "WebSphere MQ cartridge ${project.version} removed (supported WebSphere MQ RAR ${wmq.version})."
+client_result "WebSphere MQ RAR cartridge ${project.version} removed (supported WebSphere MQ RAR ${wmq.version})."

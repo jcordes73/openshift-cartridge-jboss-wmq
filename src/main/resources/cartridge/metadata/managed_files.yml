@@ -1,0 +1,16 @@
+---
+snapshot_exclusions:
+- jbosswmq/*
+locked_files:
+- bin/
+- bin/*
+- env/OPENSHIFT_JBOSSWMQ_JNDI_NAME
+- env/OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST
+- env/OPENSHIFT_JBOSSWMQ_CHANNEL
+- env/OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER
+- metadata/
+- metadata/*
+- hooks/
+- hooks/*
+processed_templates:
+- '**/*.erb'

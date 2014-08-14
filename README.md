@@ -29,11 +29,12 @@ Below you can find information on what properties are used and can be overriden 
 
 |Property|Default|
 |--------|-------|
-|wmq.jndiName|java:/jboss/eis/MQCF|
-|wmq.host|MYHOST|
-|wmq.port|MYPORT|
+|wmq.jndiName|java:jboss/eis/MQCF|
+|wmq.connectionNameList|localhost(14138)|
 |wmq.channel|MYCHANNEL|
 |wmq.queueManager|MYQUEUEMANAGER|
+|rpm.key.name|D3AABAF5|
+|rpm.key.passphrase|redhat|
 
 ## Install
 
@@ -88,7 +89,6 @@ When creating the cartridge you can pass the following environment variables to 
 |Name|Default (pom.xml)|
 |----|------------------|
 |OPENSHIFT_JBOSSWMQ_JNDI_NAME|wmq.jndiName|
-|OPENSHIFT_JBOSSWMQ_HOST|wmq.host|
-|OPENSHIFT_JBOSSWMQ_PORT|wmq.port|
+|OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST|wmq.connectionNameList|
 |OPENSHIFT_JBOSSWMQ_CHANNEL|wmq.channel|
 |OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER|wmq.queueManager|

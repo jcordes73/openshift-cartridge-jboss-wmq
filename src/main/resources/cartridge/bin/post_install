@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Embeds Oracle JDBC configuration into an JBoss EAP instance
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+source ${OPENSHIFT_JBOSSWMQ_DIR}/bin/util
+
+case "$1" in
+  -v|--version) wmq_version="$2"
+  ;;
+  *) wmq_version="7.0.1.7"
+  ;;
+esac
+
+if  ! isrunning; then
+  ${OPENSHIFT_JBOSSEAP_DIR}/bin/control start
+fi
+
+if  ! ismgmtup; then
+  client_error "WebSphere MQ RAR cartridge 1.0.3 installation failed because JBoss management interface is not up."
+  exit 1
+fi
+
+cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/${wmq_version}/wmq.jmsra.rar ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments
+
+execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/install.cli
+
+cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
+
+${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart

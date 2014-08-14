@@ -17,12 +17,9 @@ Cart-Data:
 - Key: jndi_name
   Type: cart_data
   Description: WebSphere MQ Connect-Factory JNDI-Name
-- Key: host
+- Key: connectionnamelist
   Type: cart_data
-  Description: WebSphere MQ Host
-- Key: port
-  Type: cart_data
-  Description: WebSphere MQ Port
+  Description: WebSphere MQ ConnectionNameList
 - Key: channel
   Type: cart_data
   Description: WebSphere MQ Channel
@@ -35,9 +32,9 @@ Help-Topics:
   "User Guide": https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/2/html-single/User_Guide/
   "Administration Guide": https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/2/html-single/Administration_Guide/
 Provides:
-  - "jbosswmq"
+  - jbosswmq
 Requires:
-  - "jbosseap"
+  - jbosseap
 Conflicts:
 Native-Requires:
 Architecture: noarch
