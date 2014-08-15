@@ -88,7 +88,7 @@ When creating the cartridge you can pass the following environment variables to 
 
 |Name|Default (pom.xml)|
 |----|------------------|
-|OPENSHIFT_JBOSSWMQ_JNDI_NAME|wmq.jndiName|
+|OPENSHIFT_JBOSSWMQ_JNDINAME|wmq.jndiName|
 |OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST|wmq.connectionNameList|
 |OPENSHIFT_JBOSSWMQ_CHANNEL|wmq.channel|
-|OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER|wmq.queueManager|
+|OPENSHIFT_JBOSSWMQ_QUEUEMANAGER|wmq.queueManager|

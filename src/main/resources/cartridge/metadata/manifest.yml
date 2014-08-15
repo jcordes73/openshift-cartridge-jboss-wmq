@@ -14,7 +14,7 @@ Categories:
   - database
   - embedded
 Cart-Data:
-- Key: jndi_name
+- Key: jndiname
   Type: cart_data
   Description: WebSphere MQ Connect-Factory JNDI-Name
 - Key: connectionnamelist
@@ -23,7 +23,7 @@ Cart-Data:
 - Key: channel
   Type: cart_data
   Description: WebSphere MQ Channel
-- Key: queue_manager
+- Key: queuemanager
   Type: cart_data
   Description: WebSphere MQ Queue-Manager
 Website: https://www.redhat.com/products/cloud-computing/openshift-enterprise/
