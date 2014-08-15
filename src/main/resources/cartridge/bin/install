@@ -3,6 +3,7 @@
 # Embeds WebSphere MQ configuration and JCA Adapter into an JBoss EAP instance
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
+source ${OPENSHIFT_JBOSSWMQ_DIR}/bin/util
 
 case "$1" in
   -v|--version) wmq_version="$2"
@@ -11,36 +12,14 @@ case "$1" in
   ;;
 esac
 
-env_dir="${OPENSHIFT_JBOSSWMQ_DIR}/env"
-
-if [ "x$OPENSHIFT_JBOSSWMQ_JNDI_NAME" == "x" ]; then
-  OPENSHIFT_JBOSSWMQ_JNDI_NAME="${wmq.jndiName}"
-  set_env_var 'OPENSHIFT_JBOSSWMQ_JNDI_NAME' "$OPENSHIFT_JBOSSWMQ_JNDI_NAME" $env_dir
-fi
-
-if [ "x$OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST" == "x" ]; then
-  OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST="${wmq.connectionNameList}"
-  set_env_var 'OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST' "$OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST" $env_dir
-fi
-
-if [ "x$OPENSHIFT_JBOSSWMQ_CHANNEL" == "x" ]; then
-  OPENSHIFT_JBOSSWMQ_CHANNEL="${wmq.channel}"
-  set_env_var 'OPENSHIFT_JBOSSWMQ_CHANNEL' "$OPENSHIFT_JBOSSWMQ_CHANNEL" $env_dir
-fi
-
-if [ "x$OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER" == "x" ]; then
-  OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER="${wmq.queueManager}"
-  set_env_var 'OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER' "$OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER" $env_dir
-fi
-
 client_result "WebSphere MQ RAR cartridge ${project.version} added (supports WebSphere MQ RAR ${wmq_version})."
 
 client_result ""
 client_result "Please make note of these credentials:"
 client_result ""
-client_result "  ConnectionNameList : ${OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST}"
-client_result "  Channel            : ${OPENSHIFT_JBOSSWMQ_CHANNEL}"
-client_result "  Queue Manager      : ${OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER}"
+pretty_print_client_result "ConnectionNameList" "${OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST}"
+pretty_print_client_result "Channel" "${OPENSHIFT_JBOSSWMQ_CHANNEL}"
+pretty_print_client_result "QueueManager" "${OPENSHIFT_JBOSSWMQ_QUEUE_MANAGER}"
 client_result ""
 
 cart_props "jndi_name=${OPENSHIFT_JBOSSWMQ_JNDI_NAME}"
