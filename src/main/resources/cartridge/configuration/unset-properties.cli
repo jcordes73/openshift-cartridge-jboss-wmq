@@ -1,0 +1,4 @@
+/system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:remove()
+/system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:remove()
+/system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:remove()
+/system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:remove()

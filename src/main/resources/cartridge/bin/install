@@ -22,6 +22,11 @@ pretty_print_client_result "Channel" "${OPENSHIFT_JBOSSWMQ_CHANNEL}"
 pretty_print_client_result "QueueManager" "${OPENSHIFT_JBOSSWMQ_QUEUEMANAGER}"
 client_result ""
 
+echo "OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST=$OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST" > ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/configuration.properties
+echo "OPENSHIFT_JBOSSWMQ_CHANNEL=$OPENSHIFT_JBOSSWMQ_CHANNEL" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/configuration.properties
+echo "OPENSHIFT_JBOSSWMQ_QUEUEMANAGER=$OPENSHIFT_JBOSSWMQ_QUEUEMANAGER" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/configuration.properties
+echo "OPENSHIFT_JBOSSWMQ_JNDINAME=$OPENSHIFT_JBOSSWMQ_JNDINAME" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/configuration.properties
+
 cart_props "jndi_name=${OPENSHIFT_JBOSSWMQ_JNDINAME}"
 cart_props "connectionnamelist=${OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST}"
 cart_props "channel=${OPENSHIFT_JBOSSWMQ_CHANNEL}"
