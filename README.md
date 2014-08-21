@@ -52,14 +52,30 @@ rpm -ivh openshift-cartridge-jboss-wmq-${project.version}-1.noarch.rpm
 
 After the RPM has been installed successfully you need to install the cartridge like this:
 
+###OSE 2.0
+
 ```bash
 oo-admin-cartridge -a install -s /usr/libexec/openshift/cartridges/jboss-wmq
 ```
 
+###OSE 2.1
+
+```bash
+oo-admin-ctl-cartridge -c import-node --activate
+```
+
 The last installation step is to clear the caches on the OpenShift Broker:
+
+###OSE 2.0
 
 ```bash
 oo-admin-broker-cache --clear --console
+```
+
+###OSE 2.1
+
+```bash
+service ruby193-mcollective restart
 ```
 
 ## Remove
@@ -72,14 +88,29 @@ rpm -e openshift-cartridge-jboss-wmq-${project.version}-1.noarch
 
 The next command will list all available OpenShift cartridges along with it's versions and cartridge-versions:
 
+###OSE 2.0
 ```bash
 oo-admin-cartridge -l
 ```
 
+###OSE 2.1
+
+```bash
+oo-admin-ctl-cartridge -c list
+```
+
 Finally you delete the cartridge using this command
+
+###OSE 2.0
 
 ```bash
 oo-admin-cartridge -a erase --name jbosswmq --version ${wmq.version} --cartridge_version ${project.version}
+```
+
+###OSE 2.1
+
+```bash
+oo-admin-ctl-cartridge -c delete -n jboss-wmq-${project.version}
 ```
 
 ## Cartridge creation

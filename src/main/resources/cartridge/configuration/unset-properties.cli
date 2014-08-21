@@ -1,4 +1,16 @@
-/system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:remove()
-/system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:remove()
-/system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:remove()
-/system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:remove()
+# Remove system-properties
+if (outcome == success) of /system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:read-resource()
+  /system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:remove()
+end-if
+
+if (outcome == success) of /system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:read-resource()
+  /system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:remove()
+end-if
+
+if (outcome == success) of /system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:read-resource()
+  /system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:remove()
+end-if
+
+if (outcome == success) of /system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:read-resource()
+  /system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:remove()
+end-if
