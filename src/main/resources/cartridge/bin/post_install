@@ -3,7 +3,7 @@
 # Embeds Oracle JDBC configuration into an JBoss EAP instance
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
-source ${OPENSHIFT_JBOSSWMQ_DIR}/bin/util
+source ${OPENSHIFT_JBOSSWMQ_DIR}bin/util
 
 case "$1" in
   -v|--version) wmq_version="$2"
@@ -13,43 +13,32 @@ case "$1" in
 esac
 
 if  ! isrunning; then
-  ${OPENSHIFT_JBOSSEAP_DIR}/bin/control start
+  ${OPENSHIFT_JBOSSEAP_DIR}bin/control start
 fi
 
 if  ! ismgmtup; then
-  client_error "WebSphere MQ RAR cartridge 1.0.3 installation failed because JBoss management interface is not up."
+  client_error "WebSphere MQ RAR cartridge ${wmq_version} installation failed because JBoss management interface is not up."
   exit 1
 fi
 
-cp ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/${wmq_version}/wmq.jmsra.rar ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments
+ln -s ${OPENSHIFT_JBOSSWMQ_DIR}configuration/${wmq_version} ${OPENSHIFT_JBOSSWMQ_DIR}deployments
 
-echo "if (outcome != success) of /system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:read-resource()" > ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:add(value=\"$OPENSHIFT_JBOSSWMQ_JNDINAME\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "else" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_JNDINAME:write-attribute(name=value,value=\"$OPENSHIFT_JBOSSWMQ_JNDINAME\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "end-if" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
+# Add deployment scanner for the WMQ RAR Adapter (so that is excluded from the GIT repo)
+echo "if (outcome != success) of /subsystem=/subsystem=deployment-scanner/scanner=wmq:read-resource()" > ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=deployment-scanner/scanner=wmq:add(path=\"${OPENSHIFT_JBOSSWMQ_DIR}deployments\", scan-enabled=true)" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "end-if" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/install.cli
 
-echo "if (outcome != success) of /system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:read-resource()" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:add(value=\"$OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "else" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST:write-attribute(name=value,value=\"$OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "end-if" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
+# Add WMQ resource adapter if it doesn exist
+echo "if (outcome != success) of /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar:read-resource()" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar:add(archive=wmq.jmsra.rar,transaction-support=LocalTransaction)" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool:add(class-name=com.ibm.mq.connector.outbound.ManagedConnectionFactoryImpl, jndi-name=\"${OPENSHIFT_JBOSSWMQ_JNDINAME}\", enabled=true, use-java-context=true, use-ccm=true,min-pool-size=1, max-pool-size=10)" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=connectionNameList:add(value=\"${OPENSHIFT_JBOSSWMQ_CONNECTIONNAMELIST}\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=channel:add(value=\"${OPENSHIFT_JBOSSWMQ_CHANNEL}\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=transportType:add(value="CLIENT")" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "  /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar/connection-definitions=WMQConnectionFactoryPool/config-properties=queueManager:add(value=\"${OPENSHIFT_JBOSSWMQ_QUEUEMANAGER}\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+echo "end-if" >> ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
 
-echo "if (outcome != success) of /system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:read-resource()" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:add(value=\"$OPENSHIFT_JBOSSWMQ_CHANNEL\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "else" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_CHANNEL:write-attribute(name=value,value=\"$OPENSHIFT_JBOSSWMQ_CHANNEL\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "end-if" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
+execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}configuration/install.cli
+copy_jboss_config
 
-echo "if (outcome != success) of /system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:read-resource()" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:add(value=\"$OPENSHIFT_JBOSSWMQ_QUEUEMANAGER\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "else" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "  /system-property=OPENSHIFT_JBOSSWMQ_QUEUEMANAGER:write-attribute(name=value,value=\"$OPENSHIFT_JBOSSWMQ_QUEUEMANAGER\")" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-echo "end-if" >> ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-
-execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/set-properties.cli
-execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/install.cli
-
-cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
-
-${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
+${OPENSHIFT_JBOSSEAP_DIR}bin/control restart

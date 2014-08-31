@@ -16,11 +16,9 @@ if  ! ismgmtup; then
 fi
 
 execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/teardown.cli
-execute_cli ${OPENSHIFT_JBOSSWMQ_DIR}/configuration/unset-properties.cli
 
+rm ${OPENSHIFT_JBOSSWMQ_DIR}/deployments
 cp ${OPENSHIFT_JBOSSEAP_DIR}/standalone/configuration/standalone.xml ${OPENSHIFT_REPO_DIR}/.openshift/config/
-
-rm ${OPENSHIFT_DEPENDENCIES_DIR}/jbosseap/deployments/wmq.jmsra.rar
 
 ${OPENSHIFT_JBOSSEAP_DIR}/bin/control restart
 

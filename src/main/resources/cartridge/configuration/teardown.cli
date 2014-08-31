@@ -2,3 +2,8 @@
 if (outcome == success) of /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar:read-resource()
   /subsystem=resource-adapters/resource-adapter=wmq.jmsra.rar:remove()
 end-if
+
+# Remove deployment scanner
+if (outcome == success) of /subsystem=deployment-scanner/scanner=wmq:read-resource()
+  /subsystem=deployment-scanner/scanner=wmq:remove()
+end-if
